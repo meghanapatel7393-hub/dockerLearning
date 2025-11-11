@@ -262,6 +262,173 @@
       docker network disconnect NETWORK_NAME CONTAINER_NAME<br /><br />
 
       <br /><br />
+
+      <strong>Docker Compose</strong> Docker Compose is a tool for defining and
+      running multi-container applications.
+      <br />
+      Docker compose is better way to run docker containers. here we need create
+      .yaml file. that file contain all container details and commands to
+      run.<br />
+      <br />cmd command write inside yaml file like this way: <br />
+      version: "3.8" -> this is docker compose version/ this is optional<br />
+      services: <br />
+      mongo: <br />
+      image: mongo <br />
+      ports: <br />
+      - "27017:27017" <br />
+      environment: <br />
+      - MONGO_INITDB_ROOT_USERNAME=admin <br />
+      - MONGO_INITDB_ROOT_PASSWORD=qwerty <br />
+      networks: <br />
+      - mongo-network <br />
+      <br /><br />
+
+      mongo-express: <br />
+      image: mongo-express <br />
+      ports: <br />
+      - "8081:8081" <br />
+      networks: <br />
+      - mongo-network <br />
+      environment: <br />
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin <br />
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=qwerty <br />
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:qwerty@mongo:27017 <br />
+      <br />
+
+      used for create/run docker compose file ->><strong>
+        docker compose -f fileName.yaml up -d</strong
+      >
+      <br />
+      used for remove/stop docker compose file ->><strong>
+        docker compose -f fileName.yaml down</strong
+      >
+      <br />
+
+      <br />command for run docker compose file <br />
+      docker compose up -d <br />
+      <br />
+      command for stop docker compose file <br />
+      docker compose down
+      <br /><br />
+
+      when we create docker file in that file we does not need to any network
+      because docker compose create default network and run all container on
+      default network so all file run in same network. <br />
+      so in yaml file no any netwok required to create it.
+      <br /><br />
+      in this demo we have same process done using docker compose that done by
+      command previously.
+      <br />
+      here <strong>mongodb.yaml</strong> file created in this project fot
+      docker-compose.<br />
+      <strong
+        >run this command for run docker compose file same folder where
+        mongodb.yaml file exist - docker compose -f mongodb.yaml up -d</strong
+      >
+
+      when we re-create container or stop container its not store data. <br />
+      for data store we need to use volume.<br />
+      <strong
+        >for delete multiple container and that network and data we need to run
+        this command - docker compose -f mongodb.yaml down</strong
+      >
+
+      <br /><br />
+      <strong>Dockerizing our App</strong>
+      <br />
+      <strong
+        >Step 1: Create a Dockerfile inside this project without any
+        extension</strong
+      >
+      <strong>Step 2: Build the Docker Image</strong>
+      <br />
+      <strong>Step 3: Run the Docker Container</strong>
+      <br /><br />
+      visit this link for docker file
+      <a
+        href="https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile"
+        >How to write docker file</a
+      >
+      <br />
+      Important Dockerfile instructions:
+      <br />
+      FROM - specify the base image <br />
+      WORKDIR - set the working directory<br />
+      COPY - copy files from the host to the container <br />
+      RUN - run commands in the container <br />
+      CMD - set the command to run when the container starts <br />
+      EXPOSE - expose a port on the container <br />
+      ENV - set environment variables <br />
+      <br />
+
+      in this project we have create docker file Dockerfile -> its build using
+      this command -> docker build -t testapp:1.0 .
+      <br />
+      after complete this commnd our image will be created and we can run
+      container using this command -> docker run testapp:1.0 -> this will run
+      container using this image.
+      <br /><br />
+      here our node server is started when we use this command or run this image
+      - docker run testapp:1.0 -> because this image has node server inside it.
+      <br />
+      <br />
+
+      now run our container in interative mode -> docker run -it testapp:1.0
+      bash -> we are now inside this container
+      <br />
+
+      <strong
+        >using docker compose now run our 3 images . mongo, mongo-express and
+        our node(testapp) server.</strong
+      >
+      for that we need testapp image add services in our docker-compose file ->
+      mongodb.yaml <br /><br />
+      <strong>Publishing Images to Docker Hub</strong> <br />
+      <strong>Step 1: Login to Docker Hub</strong> <br />
+      <strong>Step 2: Tag the Image</strong> <br />
+      <strong>Step 3: Push the Image to Docker Hub</strong>
+      create docker hub account. and then login using this command -> docker
+      login
+      <br />
+      here we got option login with authentication in the browser. this option
+      used to login to docker hub in cmd.
+      <br />
+      now create image using this command -> docker build -t testapp:1.0 .
+      <br />
+      docker build -t meghanapatel7393/testapp .
+      <br />
+      now tag the image -> docker tag testapp:1.0 meghanapatel7393/testapp ->
+      here create repository on docker hub manualy with name
+      meghanapatel7393/testapp -> and create image using cmd in our project then
+      push
+      <br />
+      now push the image to docker hub -> docker push meghanapatel7393/testapp -
+      using this command our image will be pushed to docker hub
+      <br />
+      <br />
+      now we can run our image from docker hub using this command -> docker run
+      -it meghanapatel7393/testapp
+      <br />
+      process done and our image is pushed to docker hub.<br />
+      <br />
+      this way we can create docker image and push it to docker hub for public
+      use.<br />
+      <br />
+      docker pull meghanapatel7393/testapp:latest <br />
+      this way we used our images as like we started used other images.<br />
+
+      <br /><br />
+      <strong>Docker Volumes</strong>
+      <br />
+      Volumes are persistent storage for data inside the container. <br />
+      if we want to store data inside the container we need to use volume.
+      <br />
+
+      without volume we can not store data. when we re-create container or stop
+      container our data is lost so we need volume to store our data. <br />
+
+      -v 
+
     </p>
   </body>
 </html>
