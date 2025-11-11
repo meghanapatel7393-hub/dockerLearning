@@ -136,7 +136,132 @@
         target="_blank"
         >https://github.com/shradha-khapra/docker-testapp.git</a
       >
-      
+
+      <br />in this project used Mongodb databse and mongo-express<br />
+      there are 2 image - mongo and mongo-express<br />
+
+      we need to connect mongo db to mongo express using docker network to
+      interaction between them.<br />
+
+      in this project there are 2 container - mongo and mongo-express
+      <strong>setting up mongo & mongo-express</strong>
+      <a
+        href="https://hub.docker.com/_/mongo"
+        target="_blank"
+        style="display: block"
+        >to setup mongo follow intruction here</a
+      >
+      <a
+        href="https://hub.docker.com/_/mongo-express"
+        target="_blank"
+        style="display: block"
+        >to setup mongo-express follow intruction here</a
+      >
+      <br />
+      we need some setup : itns need to run with -d command to run in detached
+      mode. we need to connec/bind host port to container port.its connect using
+      -p command<br />
+      we need some environment variable to connect mongo db to mongo express.its
+      connect using -e command.
+      <br />
+      final command is - docker run -d -p 27017:27017 --name mongo --network
+      mongo-network -e MONGO_INITDB_ROOT_USERNAME=admin -e
+      MONGO_INITDB_ROOT_PASSWORD=qwerty mongo <br />
+      <br />
+      run first container mongo <br />
+      <strong
+        >docker run -d -p 27017:27017 --name mongo --network mongo-network -e
+        MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=qwerty
+        mongo</strong
+      >
+      ite automaticaly find and download images that required to run this
+      container.<br />
+
+      <br />
+      now run second container mongo-express<br />
+      mongo express is a web interface for mongo db.<br />
+
+      this way used perfactly
+      <strong>
+        docker run -d -p 8081:8081 --name mongo-express --network mongo-network
+        -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e
+        ME_CONFIG_MONGODB_ADMINPASSWORD=qwerty -e
+        ME_CONFIG_MONGODB_URL="mongodb://admin:qwerty@mongo:27017" mongo-express
+      </strong>
+
+      <br />
+      docker run -d -p 8081:8081 --name mongo-express --network mongo-network -e
+      ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e
+      ME_CONFIG_MONGODB_ADMINPASSWORD=qwerty -e
+      ME_CONFIG_MONGODB_URL="mongodb://admin:qwerty@mongo:27017" mongo-express
+      <br />
+
+      now 2 container running done.<br />
+
+      now open http://localhost:8081 in browser. <br />
+      enter UserName - admin and password - pass<br />
+      press enter/ sign in - we enter in mongo express. this is interface that
+      help us to connect mongo db. <br />
+      <br />
+
+      now create database in mongo express <br />
+      click on database - create database - enter database name - click on
+      create
+      <br />
+      <strong
+        >enter database name -> apnacollege-db -> click create database
+        button</strong
+      ><br />
+      <strong
+        >Now Create New Collection -> users -> click create collection
+        button</strong
+      >
+      <br />
+      <strong
+        >Now Add New Document -> { "_id": ObjectId(), "email":"jane@yahoo.in",
+        "username":"jane Doe", "password":"secret" } -> click save -> using this
+        flow enter one records</strong
+      ><br />
+
+      <strong>befor getUsers call need start server.js</strong>
+      <br />
+
+      D:\learn website\ApnaCollageProjects\Github Cheat
+      Sheet\dockertestapp\docker-testapp>node server.js
+      <br />server running on port 5050 <br />
+      Connected successfully to server
+      <br />
+
+      <strong
+        >now check our database is connect with node js project/application. we
+        can call get request using this way -> localhost:5050/getUsers -> in
+        browser we see our records from database</strong
+      >
+
+      <br /><br />so first create docker network <br />
+      docker network create mongo-network<br />
+
+      now connect mongo db to mongo express <br />
+      docker network connect mongo-network mongo-express<br />
+
+      <br /><br />
+      download this project and without install node and mongo db we can set and
+      run this prokject using docker.
+
+      <br /><br />
+      <strong>Docker Network</strong> <br />
+      is a virtual network that allows containers to communicate with each
+      other.<br /><br />
+
+      <strong>Commands</strong> <br />
+
+      docker network ls - used this command to list all network<br /><br />
+      docker network create NETWORK_NAME<br /><br />
+      docker network rm NETWORK_NAME<br /><br />
+      docker network connect NETWORK_NAME CONTAINER_NAME<br /><br />
+      docker network disconnect NETWORK_NAME CONTAINER_NAME<br /><br />
+
+      <br /><br />
     </p>
   </body>
 </html>
