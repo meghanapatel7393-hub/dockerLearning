@@ -1,11 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Docker Information</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <a href="https://www.docker.com" target="_blank"
+      >Go to Docker - Download Docker Desktop</a
+    >
+    <a href="https://hub.docker.com" target="_blank" style="display: block"
+      >Go to Docker Hub - Docker Hub</a
+    >
+
+    <strong>Docker Command</strong>
+    <p>
+      <strong>docker pull image_name</strong> (Download an image from Docker
+      Hub)<br />
+      <strong>docker images</strong> (List all downloaded images)<br />
+      <strong>docker ps</strong> (Show running containers)<br />
+      <strong>docker ps -a</strong> (Show all containers (even stopped))<br />
+      <strong>docker run image_name</strong> (Run a container )(Build Container
+      from docker image)<br /><br />
+      <strong>docker run -it image_name</strong> (Run a container )(Build
+      Container from docker image) - <br />here -it stan for interactive mode -
+      means it will run the container in interactive mode. <br />interactive
+      mode means it will allow you to run commands inside the container. -> its
+      enter inside that container and we can run command inside and work with
+      them.<br />
+      for example check folderes using ls command. also we can create directory
+      inside the container.<br />
+      used exit command to exit from the container.<br />
+      when we exit our container will be stopped <br /><br />
+
+      <strong>docker run -d image_name</strong> (Run a container in detached
+      mode) - dettach mode means it will run the container in background. by
+      default it all other container run in attached mode, using -d command we
+      can run container in detached mode.<br />
+
+      <strong>docker run -d -e MYSQL_ROOT_PASSWORD=1234 image_name</strong> (Run
+      a container in detached mode and set environment variable
+      MYSQL_ROOT_PASSWORD to 1234)<br /><br />
+
+      <strong
+        >docker run -d -e MYSQL_ROOT_PASSWORD=1234 --name mynewName-mysql
+        image_name</strong
+      >
+      (Run a container in detached mode and set environment variable
+      MYSQL_ROOT_PASSWORD to 1234 and name the container mynewName-mysql) using
+      --name we can set custom name to the container<br /><br />
+
+      we can run multiple container at the same time.<br />
+
+      <strong>docker start container_id / container_name</strong> (Start a
+      stopped container)<br />
+      <strong>docker stop container_id / container_name</strong> (Stop a running
+      container)<br />
+      <strong>docker rm container_id / container_name</strong> (Remove a
+      container)<br />
+      <strong>docker rmi image_id</strong> (Remove an image)<br />
+      <strong>docker exec -it container_id bash</strong> (Enter inside a running
+      container)<br />
+      <br /><br />
+      <strong
+        >we can create container using
+        <span style="color: red">run</span> command.<br />
+        we can start container using
+        <span style="color: red">start</span> command.<br />
+        we can stop container using
+        <span style="color: red">stop</span> command.<br />
+        we can remove container using
+        <span style="color: red"> rm </span>command.<br />
+        we can remove image using
+        <span style="color: red">rmi </span>command.<br />
+        we can enter inside container using
+        <span style="color: red"> exec</span> command.
+      </strong>
+
+      <br /><br />
+      <strong>How to download specific version of mysql</strong> <br />
+
+      <strong>docker pull mysql:5.7</strong> (Download MySQL 5.7 image)<br />
+      <strong>docker pull mysql:8.0</strong> (Download MySQL 8.0 image)<br />
+      <strong>docker pull mysql:latest</strong> (Download the latest MySQL
+      image) if we not pass any version by default its latest<br />
+      we can download multiple mysql with different versions.<br />
+
+      <br /><br />
+      <strong>Docker image Layer </strong> <br />
+      Docker image is a collection of layers. <br />
+      Each layer represents a single change to the image.<br />
+
+      Layers in this flow -> Base Layer - base layer is based on linux -> Layer
+      1 -> Layer 2 -> Container Layer.<br />
+      here container layer we can chnaged only other layers are unchanged
+      <br /><br />
+
+      <strong>Port Binding</strong> <br />
+      Port binding is a way to map a port on the host to a port on the
+      container. It allows you to access the container from outside the host.<br />
+
+      <strong>docker run -d -p 80:80 image_name</strong> (Run a container in
+      detached mode and map port 80 of the container to port 80 of the host)<br />
+      <strong>docker run -d -p 80:80 -p 443:443 image_name</strong> (Run a
+      container in detached mode and map port 80 and 443 of the container to
+      port 80 and 443 of the host)<br /><br />
+
+      <strong>docker run -d -p 80:80 -p 443:443 -p 3306:3306 image_name</strong>
+      (Run a container in detached mode and map port 80, 443 and 3306 of the
+      container to port 80, 443 and 3306 of the host)<br /><br />
+
+      <strong>Troubleshoot Commands</strong> <br />
+      <strong>docker logs container_id</strong> (Show logs of a container to
+      check error log)<br />
+      <strong>docker inspect container_id</strong> (Show details of a container)
+      <br />
+      <strong>docker exec -it container_id /bin/bash</strong> (Enter inside a
+      running container)<br />
+      <strong>docker exec -it containeer_id /bin/sh</strong>
+      <br /><br />
+
+      <strong>difference between Docker vs virtual machine</strong> <br />
+
+      Docker is a lightweight and portable environment for running applications,
+      while virtual machines provide a full-fledged operating system
+      environment.
+
+      <br /><br />
+
+      <strong>Developing with Docker</strong>
+    </p>
+  </body>
 </html>
