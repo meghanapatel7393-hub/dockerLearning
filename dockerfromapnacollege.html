@@ -427,8 +427,195 @@
       without volume we can not store data. when we re-create container or stop
       container our data is lost so we need volume to store our data. <br />
 
-      -v 
+      data store not remove when re remove container because it is reserve space
+      seperatly for our data. so we can connect that data with multiple
+      containers. and its not remove when we remove container. <br />
 
+      <strong
+        >Now Simple demo with ubuntu container. this ubuntu container is getting
+        from docker hub its not our image</strong
+      >
+      <br />
+      docker run -it ubuntu - we create ubuntu container with iterative mode.
+      this way create without volume <br />
+      so use this command for create with volume -> docker run -it -v ubuntu -
+      we create ubuntu container with iterative mode. this way create with
+      volume. <br />
+
+      -v used to create volume. <br />
+      -v name_of_volume:/path_of_volume used to create volume. <br />
+
+      now run this command to check our volume -> ls
+      /var/lib/docker/volumes/ubuntu<br />
+
+      host-path:/container-path <br />
+      /var/lib/docker/volumes/ubuntu:/var/lib/docker/volumes/ubuntu
+      <br />
+      above way we can create data volume on our pc , server or docker
+      container. some path diferent when we create volume storage
+
+      <br />
+
+      <strong
+        >command to set path and set volumn and run ubuntu container in
+        iterative mode - docker run -it -v
+        C:/Users/pcname/Desktop/foldername:/test/data ubuntu</strong
+      >
+      <br />
+      cerate data folder on desktop manualy. now they connect with test/data
+      folder using above comand perfactly create folder on desktop and run
+      ubuntu container. now we can check ls command
+      <br />
+      below file create in test/data folder using command.<br />
+      touch test.txt -> this create test.txt file in test/data folder. now we
+      can check ls command.<br />
+      touch indext.html -> this create indext.html file in test/data folder. now
+      we can check ls command.<br />
+      touch server.js -> this create server.js file in test/data folder. now we
+      can check ls command.<br />
+      this way we crete and write inside test/data folder using ubuntu container
+      its create automatically on our pc folder.<br />
+      <br />
+      <strong> cntl+D to exit</strong><br />
+      docker ps- to check running container<br />
+      <strong
+        >how to stop container and start container and enter inside existing
+        container</strong
+      >
+
+      <br />
+      docker start container_id / container_name <br />
+      docker start
+      332a5ebb553d4d418caf055607da8b867e9db2c7236013a418dc2570ac32ade3 <br />
+      <br />
+      enter inside container - docker exec -it
+      332a5ebb553d4d418caf055607da8b867e9db2c7236013a418dc2570ac32ade3 /bin/bash
+      <br />
+      We Enter inside the container in iteractive mode
+      <br />
+      now check our data is not lost. also we delete container then also data
+      not lost because data is store in my volume.<br />
+
+      <br />
+
+      <strong>
+        now we make small demo that previously create but there are data lost .
+        now we used with volume to data store</strong
+      >
+      <br />
+      for that we set volume path inside docker file (.yaml )
+      <br />
+
+      i set this path C:\Users\a\Desktop\newdata
+      <br /><br />
+      volumes:<br />
+      - C:/Users/a/Desktop/newdata:/data/db<br />
+      #- host_dir:con_dir - set with mongo db that path as per documentation
+      /data/db<br />
+      this way we set path inside docker file.<br />
+
+      now run container and docker file using docker compose.<br />
+      <strong style="color: red"
+        >One Note : If any images is exist with any port we can not create any
+        iamges with that port. means one port bind with single image</strong
+      >
+      docker compose -f mongodb.yaml up -d <br />
+      this command create one default network and run all container in same
+      default network.<br />
+      now our mongo db complete connect with out volume.<br />
+      now create data base from our localhost:8081 mongo-express interface.<br />
+      apnacollege-db create datase<br />
+      goto inside data base<br />
+      now create collection from mongo-express interface.<br />
+      enter users as collection name.<br />
+      and click on create collection.<br />
+      apnacollege-db.createCollection("users")<br />
+      now create document inside collection.<br />
+      click on new document for insert record.
+      apnacollege-db.users.insertOne({name:"megha",age:21})<br />
+      { "_id": ObjectId(), "email":"megha@gmail.com", "username":"megha",
+      "password":"secret" }
+      <br />
+      click on save. now our record is done.<br />
+      now stop all running container using pess ctrl + c inside cmd where we run
+      compose command.
+      <br />
+      now delet all using docker compose -f mongodb.yaml down.<br />
+      now check our continer and images are remove.<br />
+      <strong
+        >now run this command to create fresh new container -> docker compose -f
+        mongodb.yaml up -d </strong
+      ><br />
+      now we can check data is store in our volume.<br />
+      hey lets our data is there as it is.<br />
+
+      this things is happen only using volume.<br />
+
+      to check all our to check all volume use command - docker volume ls
+      <br />
+      we can also create out custome command using - docker volume create
+      volume_name --- this volumed called named volume. <br />
+      to remove volume use command - docker volume rm volume_name<br />
+
+      lets create and check - docker volume create myVolume -> this way create
+      volumn on docker default pathin our pc (default path is
+      C:/ProgramData/docker/volumes). if we set out path then its create on our
+      path by default its on default path<br />
+      check using docker volume ls <br /><br />
+      now remove volume - docker volume rm myVolume<br />
+
+      when we create any volume is isolated means not connected with any
+      container. <br />
+      when we need used with any container then its need to connect container
+      with that volume.
+      <br />
+      to attach volume with container use command - <br />
+      Named Volumn -> docker run -v VOL_NAME:CONTAINER_DIR - here container_dir
+      means mount path <br />
+      Anonymous Volumn -> docker run -v MOUNT_PATH - here we can used only mount
+      path. this used for temprory storage becase we does not know name of
+      volumn
+      <br />
+      in above 2((name / anonymous volume)) way volume manage by docker.<br />
+      in below method volumn manage by host machine ka operating system.<br />
+      <br />
+      if we use anonymous volumn then its create on default path. <br />
+
+      bind mount -> docker run -v HOST_DIR:CONTAINER_DIR - here we bind(mounted)
+      local host directory to with docker container directory. <br />
+
+      there are 2 flag --volumn (-v) using this flag and --mount <br />
+      which work done by --volumn its also work done by --mount.<br />
+      <a
+        href="https://docs.docker.com/engine/storage/volumes"
+        target="_blank"
+        style="display: block; font-size: 22px; margin: 10px"
+        >check syntax here</a
+      ><br />
+      below both command is same work.<br />
+      docker run --mount
+      type=volume,src=&lt;volume-name&gt;,dst=&lt;mount-path&gt; <br />
+      docker run --volume &lt;volume-name&gt;:&lt;mount-path&gt;<br />
+
+      <br />
+      docker volume prune - used to remove unused volumes.<br />
+      this is remove all volumn which is not used by any container.<br />
+
+      <br />
+      netwrok check - docker network ls <br />
+      we can create network using - docker network create NETWORK_NAME <br />
+      we can remove network using - docker network rm NETWORK_NAME <br />
+      we can connect container with network using - docker network connect
+      NETWORK_NAME CONTAINER_NAME <br />
+      we can disconnect container with network using - docker network disconnect
+      NETWORK_NAME CONTAINER_NAME <br />
+
+      <br />here bridge driver used by default.<br />
+      <strong>read more about docker network drivers here <a href="https://docs.docker.com/engine/network/drivers" target="_blank">Read Me for Network Drivers</a></strong><br>
+      second network is host network - docker network create --driver=host
+      HOST_NETWORK_NAME <br />
+      third network is null network - docker network create --driver=none
+      NONE_NETWORK_NAME <br />
     </p>
   </body>
 </html>
